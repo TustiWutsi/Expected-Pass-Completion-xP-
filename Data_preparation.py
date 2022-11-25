@@ -34,7 +34,9 @@ def prepare_pass_data(match_df):
     match_df['minute'] = [match_df.loc[i,'minute'] for i in range(len(match_df))]
     match_df['team'] = [match_df.loc[i,'team']['name'] for i in range(len(match_df))]
     match_df['opponent_team'] = [match_df.loc[i,'opponentTeam']['name'] for i in range(len(match_df))]
-    match_df['player'] = [match_df.loc[i,'player']['name'] for i in range(len(match_df))]
+    match_df['player_name'] = [match_df.loc[i,'player']['name'] for i in range(len(match_df))]
+    match_df['player_id'] = [match_df.loc[i,'player']['id'] for i in range(len(match_df))]
+    match_df['player_position'] = [match_df.loc[i,'player']['position'] for i in range(len(match_df))]
     
     match_df['eventName'] = [match_df.loc[i,'type']['primary'] for i in range(len(match_df))]
     match_df['subEventName'] = [match_df.loc[i,'type']['secondary'] for i in range(len(match_df))]
@@ -84,7 +86,7 @@ def prepare_pass_data(match_df):
     # Here we keep pass attributes that are available both for 2021 and 2022 data
     
     passes_vf = passes[[
-       'match_id', 'match_period', 'minute', 'team', 'opponent_team', 'player',
+       'match_id', 'match_period', 'minute', 'team', 'opponent_team', 'player_name', 'player_id', 'player_position',
        'x_start', 'y_start',
        'previous_carry_progression',
        'previous_action_teammate',
