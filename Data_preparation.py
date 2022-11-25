@@ -10,9 +10,9 @@ import matplotlib.pyplot as plt
 import pickle
 from sklearn.preprocessing import MultiLabelBinarizer
 
+
 # get the list of match_id from a given competition and season if you have Wyscout API access (otherwise, you can use free available data)
 # credentials = username:password encoded in Base64
-
 def get_match_ids(competition_id, season_id, credentials):
     
     URL = f"https://apirest.wyscout.com/v3/competitions/{competition_id}/matches"
@@ -24,9 +24,9 @@ def get_match_ids(competition_id, season_id, credentials):
     return match_ids
 
 
+
 # Transform the dataframe at the right format for modelling
 # Those transformations are based on Wyscout V3, some updates should be done for former versions
-
 def prepare_pass_data(match_df):
     
     match_df['match_id'] = [match_df.loc[i,'matchId'] for i in range(len(match_df))]
@@ -107,6 +107,7 @@ def prepare_pass_data(match_df):
     return passes_vf
 
 
+
 def load_and_prepare_pass_data(match_ids, credentials):
 
     df_pass = pd.DataFrame()
@@ -123,6 +124,7 @@ def load_and_prepare_pass_data(match_ids, credentials):
     return df_pass
 
 
+
 def change_column_type(df):
     for col in df.columns[15:]:
         if df[col].dtypes == 'uint8':
@@ -131,6 +133,25 @@ def change_column_type(df):
             try:
                 df[col] = df[col].values.to_dense().astype(np.int64)
             except:
-                pass
-            
+                pass   
+    
+    return df
+
+
+
+# This function returns a dataframe with the total number of minutes played by players
+def get_season_minutes_played(df_pass, competition_id, credentials):
+    
+    df = pd.DataFrame({'player_id':[], 'total_minutes_played':[]})
+    players_ids = list(df_pass.player_id.unique())
+    
+    for player_id in tqdm(players_ids):
+        
+        URL = f"https://apirest.wyscout.com/v3/players/525236/advancedstats?compId={competition_id}"
+        r = requests.get(url = URL, headers={'Authorization': f'Basic {credentials}'})
+        data = r.json()
+        
+        df_player = pd.DataFrame({'player_id': [data['playerId']], 'total_minutes_played': [data['total']['minutesOnField']]})
+        df = pd.concat([df, df_player])
+    
     return df
