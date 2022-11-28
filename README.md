@@ -1,7 +1,7 @@
 # Expected-Pass-Completion-xP-
 
-This repo explains how to build Expected Pass Completion (xP) and Passes Completed Above Expected (PAx) models with football event-data.
-Here I use Wyscout data from the API (v3 format), but you can leverage Wyscout free available data :
+This repo explains how to build an Expected Pass Completion (xP) model and a Passes Completed Above Expected (PAx) score with football event-data.
+Here I use Wyscout data from the API (v3 format), but you can leverage Wyscout free available data.
 
 Why football clubs need such a model ?
 - Because passes are the most recurrent events of a football game, which is why passing ability must be evaluated
