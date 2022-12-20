@@ -29,9 +29,7 @@ def get_match_ids(competition_id, season_id, credentials):
 # Those transformations are based on Wyscout V3, some updates should be done for former versions
 def prepare_pass_data(match_df):
     
-    match_df['match_id'] = [match_df.loc[i,'matchId'] for i in range(len(match_df))]
-    match_df['match_period'] = [match_df.loc[i,'matchPeriod'] for i in range(len(match_df))]
-    match_df['minute'] = [match_df.loc[i,'minute'] for i in range(len(match_df))]
+    #clean code by flatten dictionnaries
     match_df['team'] = [match_df.loc[i,'team']['name'] for i in range(len(match_df))]
     match_df['opponent_team'] = [match_df.loc[i,'opponentTeam']['name'] for i in range(len(match_df))]
     match_df['player_name'] = [match_df.loc[i,'player']['name'] for i in range(len(match_df))]
